@@ -23,7 +23,7 @@ namespace JudgementApp
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 try
-                {
+                {   
                     connection.Open();
                     return true;
                 }
