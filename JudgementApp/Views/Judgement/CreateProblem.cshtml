@@ -19,10 +19,10 @@
 </head>
 <body>
     <section class="contact-clean">
-        <form method="post" style="text-align: center;">
+        <form action="Update" method="post" style="text-align: center;">
             <h2 class="text-center">Create Problem</h2>
             <div>
-                <div class="card shadow mb-4" id="Question-1">
+                @*<div class="card shadow mb-4" id="Question-1">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h6 class="text-primary fw-bold m-0">Question 1&nbsp;</h6>
                     </div>
@@ -55,24 +55,24 @@
                             </select>
                         </div>
                     </div>
-                </div>
+                </div>*@
             </div>
             <div>
-                <div class="card shadow mb-4" id="Question-4">
+                <div class="card shadow mb-4" id="Question-1">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h6 class="text-primary fw-bold m-0">Question 2</h6>
+                        <h6 class="text-primary fw-bold m-0">Question 1</h6>
                     </div>
                     <div class="card-body" style="text-align: left;">
                         <label class="form-label" style="font-style: normal;font-weight: bold;">will [P1] hit [P2] by [P3]?</label>
                         <div style="width: 290px;">
-                            <label class="form-label" style="padding-left: 4px;">P1</label><select class="form-select" style="width: 250px;margin-top: 15px;display: inline;margin-left: 15px;">
+                            <label class="form-label" style="padding-left: 4px;">P1</label><select name="TestSelect" class="form-select" style="width: 250px;margin-top: 15px;display: inline;margin-left: 15px;">
                                 @foreach (var details in Model)
                                 {
                                     if (details.Id == 0)
                                     {
                                         continue;
                                     }
-                                    <option value=@details.Id>@details.SymbolName</option>
+                                    <option value=@details.SymbolName>@details.SymbolName</option>
                                 }
                             </select>
                         </div>
@@ -89,9 +89,9 @@
                 </div>
             </div>
             <div>
-                <div class="card shadow mb-4" id="Question-3">
+                <div class="card shadow mb-4" id="Question-2">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h6 class="text-primary fw-bold m-0">Question 3</h6>
+                        <h6 class="text-primary fw-bold m-0">Question 2</h6>
                     </div>
                     <div class="card-body" style="text-align: left;">
                         <label class="form-label"><strong>will [P1] close [P2] [P3] [P4]?</strong></label>
@@ -127,9 +127,9 @@
                 </div>
             </div>
             <div>
-                <div class="card shadow mb-4" id="Question-2">
+                <div class="card shadow mb-4" id="Question-3">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h6 class="text-primary fw-bold m-0">Question 4</h6>
+                        <h6 class="text-primary fw-bold m-0">Question 3</h6>
                     </div>
                     <div class="card-body" style="text-align: left;">
                         <label class="form-label"><strong>will [P1] have a higher return in the AM or PM?</strong></label>
@@ -149,9 +149,9 @@
                 </div>
             </div>
             <div>
-                <div class="card shadow mb-4" id="Question-1">
+                <div class="card shadow mb-4" id="Question-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h6 class="text-primary fw-bold m-0">Question 5</h6>
+                        <h6 class="text-primary fw-bold m-0">Question 4</h6>
                     </div>
                     <div class="card-body" style="text-align: left;">
                         <label class="form-label"><strong>will [P1] have a higher return before or after [P2]?</strong></label>
@@ -179,10 +179,10 @@
                         </div>
                     </div>
                 </div>
-            </div><button class="btn btn-primary" type="button">Update</button>
+            </div><button class="btn btn-primary" type="submit">Update</button>
         </form>
     </section>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>    
     <script src="assets/js/theme.js"></script>
 </body>
 </html>

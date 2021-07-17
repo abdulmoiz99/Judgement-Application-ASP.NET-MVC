@@ -24,13 +24,6 @@ namespace JudgementApp.Controllers
 
             var Lines = results.Split('\n');
 
-            //for (int i = 0; i < 3; i++)
-            //{
-            //    var data1 = new Data();
-            //   // data1.Id = i;
-            //    data1.SymbolName = i.ToString();
-            //    model.Add(data1);
-            //}
             int id = 0;
             foreach (var line in Lines)
             {
@@ -40,6 +33,14 @@ namespace JudgementApp.Controllers
                 model.Add(data1);
             }
             return View(model);
+            
+        }
+
+        public ActionResult Update()
+        {
+           
+            //SQL.ScalarQuery("Insert into CreateProblem(QuestionNo) values ('"+result+"')");
+            return View("~/Views/Judgement/CreateProblem.cshtml");
         }
     }
 }

@@ -13,7 +13,7 @@ namespace JudgementApp
     public static class SQL
     {
         // private static String userName = String.Empty;
-        private static SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=QuizAppAsp;Integrated Security=True;Pooling=False");// ReadCS().ToString()); 
+        private static SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=JudgementApp;Integrated Security=True;Pooling=False");// ReadCS().ToString()); 
                                                                                                                                                             //  private static SqlConnection con = new SqlConnection(@"Server =WIN-U0806780LB2\SQLEXPRESS; Database=POS_CARWASH;User ID = sa; pwd=123");// ReadCS().ToString()); 
 
         //public static String DataSource = ReadCS();
