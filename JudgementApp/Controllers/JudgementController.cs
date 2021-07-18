@@ -1,6 +1,7 @@
 ﻿using JudgementApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -35,7 +36,23 @@ namespace JudgementApp.Controllers
             return View(model);
 
         }
+        public ActionResult Leaderboard()
+        {
+            var leaderboard = new List<Leaderboard>();
 
+            var results = Main.GetDataTable("select * from Judgement");
+
+            foreach (DataRow Item in results.Rows)
+            {
+                var row = new Leaderboard();
+                row.Id = Convert.ToInt32(Item["ID"]);
+                row.Username = Item["Name"].ToString();
+                row.ContestAttempted = Convert.ToInt32(Item["ContestAttempted"]);
+                leaderboard.Add(row);
+            }
+
+            return View(leaderboard);
+        }
         public ActionResult saveJudgement(JudgementParameter result)
         {
             if (Main.CheckUser(result.UserName))

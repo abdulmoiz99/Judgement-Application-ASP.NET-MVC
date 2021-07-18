@@ -10,7 +10,6 @@ namespace JudgementApp.Models
         public int Id { get; set; }
         public string SymbolName { get; set; }
 
-
         public string Q1_P1 { get; set; }
         public string Q1_P2 { get; set; }
         public string Q1_P3 { get; set; }

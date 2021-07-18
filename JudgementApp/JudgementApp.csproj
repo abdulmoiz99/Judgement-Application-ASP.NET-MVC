@@ -127,6 +127,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="Models\Data.cs" />
     <Compile Include="Models\JudgementParameter.cs" />
+    <Compile Include="Models\Leaderboard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQL.cs" />
   </ItemGroup>
@@ -195,6 +196,7 @@
     <Content Include="Views\Judgement\Success.cshtml" />
     <Content Include="Views\Judgement\Index.cshtml" />
     <Content Include="Views\Judgement\ResponseSubmitted.cshtml" />
+    <Content Include="Views\Judgement\Leaderboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
