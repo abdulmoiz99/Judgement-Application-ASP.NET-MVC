@@ -36,45 +36,19 @@ namespace JudgementApp.Controllers
 
         }
 
-        public ActionResult saveJudgement(JudgementParameter parameter)
+        public ActionResult saveJudgement(JudgementParameter result)
         {
-            string Q1 = "", Q2 = "", Q3 = "", Q4 = "";
-            //Question 1
-            if (parameter.Q1_Fact == "on")
-                Q1 = "Fact";
-            else if (parameter.Q1_Fiction == "on")
-                Q1 = "Fiction";
-
-            //Question 2
-            if (parameter.Q2_Fact == "on")
-                Q2 = "Fact";
-            else if (parameter.Q2_Fiction == "on")
-                Q2 = "Fiction";
-            //Question 3
-            if (parameter.Q3_AM == "on")
-                Q3 = "AM";
-            else if (parameter.Q3_PM == "on")
-                Q3 = "PM";
-            //Question 4
-            if (parameter.Q4_Before == "on")
-                Q4 = "Before";
-            else if (parameter.Q4_After == "on")
-                Q4 = "After";
-
-            if (Main.CheckUser(parameter.UserName))
+            if (Main.CheckUser(result.UserName))
             {
-                SQL.ScalarQuery("update Judgement set Q1 = '" + Q1 + "'," +
-                                                    " Q2 = '" + Q2 + "'" +
-                                                    " Q3 = '" + Q3 + "'" +
-                                                    " Q4 = '" + Q4 + "'" +
-                                                    " where name = '" + parameter.UserName + "'");
+
+                SQL.NonScalarQuery("update Judgement set Q1 ='" + result.Q1_Result + "',Q2 = '" + result.Q2_Result + "',Q3 = '" + result.Q3_Result + "',Q4 = '" + result.Q4_Result + "', ContestAttempted = ContestAttempted + 1 where Name = '" + result.UserName + "'");
             }
             else
             {
-                SQL.ScalarQuery("Insert into Judgement (Name                        ,Q1          ,Q2          ,Q3         ,Q4            ,contestAttempted)" +
-                                              " VALUES ('" + parameter.UserName + "','" + Q1 + "','" + Q2 + "','" + Q3 + "','" + Q4 + "' , 1)");
+                SQL.NonScalarQuery("Insert into Judgement (Name                     ,Q1                        ,Q2                        ,Q3                        ,Q4                         ,contestAttempted)" +
+                                                 " VALUES ('" + result.UserName + "','" + result.Q1_Result + "','" + result.Q2_Result + "','" + result.Q3_Result + "','" + result.Q4_Result + "' , 1)");
             }
-            return View();
+            return View("~/Views/Judgement/ResponseSubmitted.cshtml");
         }
         public ActionResult Update(Data parameter)
         {
