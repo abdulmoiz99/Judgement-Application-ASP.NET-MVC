@@ -81,5 +81,17 @@ namespace JudgementApp.Controllers
             SQL.ScalarQuery("Update CreateProblem  set p2 = '" + parameter.Q4_P2 + "' where QuestionNo = 4");
             return View("~/Views/Judgement/Success.cshtml");
         }
+        public ActionResult Details(JudgementParameter result)
+        {
+            var urlID = Url.RequestContext.RouteData.Values["id"];
+            var model = new JudgementParameter();
+            model.ID = Convert.ToInt32(urlID);
+            model.UserName = SQL.ScalarQuery("select Name from Judgement where ID = " + model.ID + "");
+            model.Q1_Result = SQL.ScalarQuery("select Q1 from Judgement where ID = " + model.ID + "");
+            model.Q2_Result = SQL.ScalarQuery("select Q2 from Judgement where ID = " + model.ID + "");
+            model.Q3_Result = SQL.ScalarQuery("select Q3 from Judgement where ID = " + model.ID + "");
+            model.Q4_Result = SQL.ScalarQuery("select Q4 from Judgement where ID = " + model.ID + "");
+            return View(model);
+        }
     }
 }

@@ -197,6 +197,7 @@
     <Content Include="Views\Judgement\Index.cshtml" />
     <Content Include="Views\Judgement\ResponseSubmitted.cshtml" />
     <Content Include="Views\Judgement\Leaderboard.cshtml" />
+    <Content Include="Views\Judgement\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

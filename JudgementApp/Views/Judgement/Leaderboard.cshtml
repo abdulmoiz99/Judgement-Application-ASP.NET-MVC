@@ -16,6 +16,7 @@
                                 <th style="width: 206px;color: rgb(16,173,137);">Username</th>
                                 <th style="width: 206px;color: rgb(16,173,137);">Contests Attempted</th>
                                 <th style="width: 206px;color: rgb(16,173,137);">Win Percentage</th>
+                                <th style="width: 206px;color: rgb(16,173,137);">Details</th>
 
                             </tr>
                         </thead>
@@ -27,7 +28,9 @@
                                 <td href="@Url.Action("Index", "Judgement")">@row.Username</td>
                                 <td>@row.ContestAttempted</td>
                                 <td>-</td>
-                               
+                                <td>
+                                    @Html.ActionLink("Details", "Details", new { id = row.Id })
+                                </td>
                             </tr>
                             }
                           
