@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -20,34 +21,55 @@ namespace JudgementApp.Controllers
         }
         public ActionResult CreateProblem(Data data)
         {
+            //To take the symbol from the website comment the below code 
             var model = new List<Data>();
-            var url = "http://oatsreportable.finra.org/OATSReportableSecurities-SOD.txt";
-            var results = (new WebClient()).DownloadString(url);
-
-            var Lines = results.Split('\n');
+            string[] symbolNames = { "SPY", "QQQ", "IWM", "TLT", "TSLA", "NFLX", "AAPL", "AMZN", "FB", "GOOGL", "NVDA" };
             int id = 0;
-            foreach (var line in Lines)
+            foreach (var line in symbolNames)
             {
                 var data1 = new Data();
-                data1.SymbolName = line.Split('|')[0];
+                data1.SymbolName = line;
                 data1.Id = id++;
                 model.Add(data1);
             }
             return View(model);
+
+            //uncomment this code to get the symbol from the site
+            //var model = new List<Data>();
+            //var url = "http://oatsreportable.finra.org/OATSReportableSecurities-SOD.txt";
+            //var results = (new WebClient()).DownloadString(url);
+
+            //var Lines = results.Split('\n');
+            //int id = 0;
+            //foreach (var line in Lines)
+            //{
+            //    var data1 = new Data();
+            //    data1.SymbolName = line.Split('|')[0];
+            //    data1.Id = id++;
+            //    model.Add(data1);
+            //}
+            //return View(model);
 
         }
         public ActionResult Leaderboard()
         {
             var leaderboard = new List<Leaderboard>();
 
-            var results = Main.GetDataTable("select * from Judgement");
+            var results = Main.GetDataTable("select Name  from Judgement group by Name");
 
             foreach (DataRow Item in results.Rows)
             {
                 var row = new Leaderboard();
-                row.Id = Convert.ToInt32(Item["ID"]);
                 row.Username = Item["Name"].ToString();
-                row.ContestAttempted = Convert.ToInt32(Item["ContestAttempted"]);
+                int totalCorrect = 0;
+                int.TryParse(SQL.ScalarQuery("select SUM(TotalCorrect) from Judgement where name = '" + row.Username + "'"), out totalCorrect);
+                row.TotalCorrect = totalCorrect;
+                row.ContestAttempted = Convert.ToInt32(SQL.ScalarQuery("select Count(*) from Judgement where Name = '" + row.Username + "'"));
+                double winPer = 0;
+                winPer = (row.TotalCorrect *100) / (row.ContestAttempted *4);
+                Debug.WriteLine(winPer);
+                row.WinPercentage = winPer.ToString();
+
                 leaderboard.Add(row);
             }
 
@@ -55,15 +77,15 @@ namespace JudgementApp.Controllers
         }
         public ActionResult saveJudgement(JudgementParameter result)
         {
+            DateTime dateTime = DateTime.UtcNow.Date;
             if (Main.CheckUser(result.UserName))
             {
-
-                SQL.NonScalarQuery("update Judgement set Q1 ='" + result.Q1_Result + "',Q2 = '" + result.Q2_Result + "',Q3 = '" + result.Q3_Result + "',Q4 = '" + result.Q4_Result + "', ContestAttempted = ContestAttempted + 1 where Name = '" + result.UserName + "'");
+                SQL.NonScalarQuery("update Judgement set Q1 ='" + result.Q1_Result + "',Q2 = '" + result.Q2_Result + "',Q3 = '" + result.Q3_Result + "',Q4 = '" + result.Q4_Result + "' where Name = '" + result.UserName + "'");
             }
             else
             {
-                SQL.NonScalarQuery("Insert into Judgement (Name                     ,Q1                        ,Q2                        ,Q3                        ,Q4                         ,contestAttempted)" +
-                                                 " VALUES ('" + result.UserName + "','" + result.Q1_Result + "','" + result.Q2_Result + "','" + result.Q3_Result + "','" + result.Q4_Result + "' , 1)");
+                SQL.NonScalarQuery("Insert into Judgement (Name                     ,Q1                        ,Q2                        ,Q3                        ,Q4                         ,date)" +
+                                                 " VALUES ('" + result.UserName + "','" + result.Q1_Result + "','" + result.Q2_Result + "','" + result.Q3_Result + "','" + result.Q4_Result + "' , (select CONVERT(datetime, '" + dateTime.ToString("yyyy/MM/dd") + "', 20)))");
             }
             return View("~/Views/Judgement/ResponseSubmitted.cshtml");
         }
@@ -81,17 +103,28 @@ namespace JudgementApp.Controllers
             SQL.ScalarQuery("Update CreateProblem  set p2 = '" + parameter.Q4_P2 + "' where QuestionNo = 4");
             return View("~/Views/Judgement/Success.cshtml");
         }
-        public ActionResult Details(JudgementParameter result)
+        public ActionResult LeaderboardDetail()
         {
-            var urlID = Url.RequestContext.RouteData.Values["id"];
-            var model = new JudgementParameter();
-            model.ID = Convert.ToInt32(urlID);
-            model.UserName = SQL.ScalarQuery("select Name from Judgement where ID = " + model.ID + "");
-            model.Q1_Result = SQL.ScalarQuery("select Q1 from Judgement where ID = " + model.ID + "");
-            model.Q2_Result = SQL.ScalarQuery("select Q2 from Judgement where ID = " + model.ID + "");
-            model.Q3_Result = SQL.ScalarQuery("select Q3 from Judgement where ID = " + model.ID + "");
-            model.Q4_Result = SQL.ScalarQuery("select Q4 from Judgement where ID = " + model.ID + "");
-            return View(model);
+            string Name = Request.QueryString["Name"];
+            var leaderboard = new List<Leaderboard>();
+
+            var results = Main.GetDataTable("select Name,Date,IsNull(TotalCorrect,0) as TotalCorrect  from Judgement where Name = '" + Name.ToString() + "'");
+
+            foreach (DataRow Item in results.Rows)
+            {
+                var row = new Leaderboard();
+                row.Username = Item["Name"].ToString();
+                row.Date = Convert.ToDateTime(Item["Date"]).ToShortDateString();
+
+                row.TotalCorrect = int.Parse(Item["TotalCorrect"].ToString());
+                int totalCor = row.TotalCorrect;
+                double winPer = (row.TotalCorrect / 4) * 100;
+
+                row.WinPercentage = winPer.ToString();
+                leaderboard.Add(row);
+            }
+
+            return View(leaderboard);
         }
     }
 }

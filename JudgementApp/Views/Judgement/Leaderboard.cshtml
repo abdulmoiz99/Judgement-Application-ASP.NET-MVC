@@ -17,27 +17,28 @@
                                 <th style="width: 206px;color: rgb(16,173,137);">Contests Attempted</th>
                                 <th style="width: 206px;color: rgb(16,173,137);">Win Percentage</th>
                                 <th style="width: 206px;color: rgb(16,173,137);">Details</th>
-
                             </tr>
                         </thead>
                         <tbody>
-
                             @foreach (var row in Model)
                             {
-                            <tr style="color: rgb(255,255,255);">
-                                <td href="@Url.Action("Index", "Judgement")">@row.Username</td>
-                                <td>@row.ContestAttempted</td>
-                                <td>-</td>
-                                <td>
-                                    @Html.ActionLink("Details", "Details", new { id = row.Id })
-                                </td>
-                            </tr>
+                                <tr style="color: rgb(255,255,255);">
+                                    <td href="@Url.Action("Index", "Judgement")">@row.Username</td>
+                                    <td>@row.ContestAttempted</td>
+                                    <td>@row.WinPercentage %</td>
+
+                                    <td>
+                                        @Html.ActionLink("Details", "LeaderboardDetail", new { Name = row.Username })
+                                    </td>
+                                </tr>
                             }
-                          
+
                         </tbody>
                     </table>
                 </div>
             </div>
+            <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Index", "Judgement")'">Judgement</button>
+
         </form>
     </section>
     <script src="~/assets/bootstrap/js/bootstrap.min.js"></script>

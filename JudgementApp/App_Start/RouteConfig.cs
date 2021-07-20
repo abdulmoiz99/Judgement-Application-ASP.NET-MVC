@@ -16,7 +16,7 @@ namespace JudgementApp
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Judgement", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Judgement", action = "Leaderboard", id = UrlParameter.Optional }
             );
         }
     }

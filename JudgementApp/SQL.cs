@@ -35,14 +35,11 @@ namespace JudgementApp
         }
         public static SqlConnection Con
         {
-
             get
             {
                 return con;
             }
         }
-
-
 
         public static String ScalarQuery(String Query)
         {
@@ -103,31 +100,6 @@ namespace JudgementApp
                 Con.Close();
             }
             return queryStatus;
-        }
-        public static void NonScalarQueryTransaction(String Query, SqlTransaction ST)
-        {
-            try
-            {
-                if (Con.State == ConnectionState.Open)
-                {
-                    Con.Close();
-                }
-                Con.Open();
-                SqlCommand cmd = new SqlCommand(Query, Con, ST);
-                cmd.ExecuteNonQuery();
-            }
-            catch (SqlException ex)
-            {
-                //MessageBox.Show("SQL " + ex.Message);
-            }
-            catch (Exception ex)
-            {
-                // MessageBox.Show("SQL" + ex.Message);
-            }
-            finally
-            {
-                Con.Close();
-            }
         }
     }
 }

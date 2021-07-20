@@ -12,5 +12,12 @@ namespace JudgementApp.Models
         public string Username { get; set; }
 
         public int ContestAttempted { get; set; }
+
+        public int TotalCorrect { get; set; }
+
+        public string WinPercentage { get; set; }
+
+        public string Date { get; set; }
+
     }
 }

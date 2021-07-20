@@ -6,7 +6,7 @@
 
     <body>
         <section class="contact-clean">
-            <form method="post" action ="saveJudgement" style="text-align: center;">
+            <form method="post" action="saveJudgement" style="text-align: center;">
                 <h2 class="text-center">Judgement</h2>
                 <div class="mb-3">
                     <input class="form-control" type="text" name="UserName" required="required" placeholder="Name">
@@ -53,7 +53,11 @@
                             <div class="form-check"><input class="form-check-input" type="radio" id="formCheck-12" name="Q4_Result" value="After"><label class="form-check-label" for="formCheck-2">After</label></div>
                         </div>
                     </div>
-                </div><button class="btn btn-primary" type="submit">SubMIt</button>
+                </div><button class="btn btn-primary" type="submit" style="width: 170px">SubMIt</button>
+                <br />
+                <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Leaderboard", "Judgement")'">Leaderboard</button>
+
+
             </form>
         </section>
         <script src="~/assets/bootstrap/js/bootstrap.min.js"></script>
