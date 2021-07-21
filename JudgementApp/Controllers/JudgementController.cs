@@ -67,7 +67,6 @@ namespace JudgementApp.Controllers
                 row.ContestAttempted = Convert.ToInt32(SQL.ScalarQuery("select Count(*) from Judgement where Name = '" + row.Username + "'"));
                 double winPer = 0;
                 winPer = (row.TotalCorrect *100) / (row.ContestAttempted *4);
-                Debug.WriteLine(winPer);
                 row.WinPercentage = winPer.ToString();
 
                 leaderboard.Add(row);
@@ -118,9 +117,12 @@ namespace JudgementApp.Controllers
 
                 row.TotalCorrect = int.Parse(Item["TotalCorrect"].ToString());
                 int totalCor = row.TotalCorrect;
-                double winPer = (row.TotalCorrect / 4) * 100;
 
+
+                double winPer = 0;
+                winPer = (row.TotalCorrect  * 100) / 4   ;
                 row.WinPercentage = winPer.ToString();
+
                 leaderboard.Add(row);
             }
 
