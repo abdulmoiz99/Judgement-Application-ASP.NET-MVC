@@ -12,12 +12,8 @@ namespace JudgementApp
 {
     public static class SQL
     {
-        // private static String userName = String.Empty;
        private static SqlConnection con = new SqlConnection(@"Data Source=.\SQLEXPRESS;Initial Catalog=JudgementApp;Integrated Security=True;Pooling=False");// ReadCS().ToString()); 
                                                                                                                                                             //  private static SqlConnection con = new SqlConnection(@"Server =WIN-U0806780LB2\SQLEXPRESS; Database=POS_CARWASH;User ID = sa; pwd=123");// ReadCS().ToString()); 
-
-        //public static String DataSource = ReadCS();
-       // private static SqlConnection con = new SqlConnection(@"workstation id=judgementApp.mssql.somee.com;packet size=4096;user id=abdul1234_SQLLogin_1;pwd=9r3zykpbca;data source=judgementApp.mssql.somee.com;persist security info=False;initial catalog=judgementApp");// ReadCS().ToString()); 
         public static bool IsServerConnected(string connectionString)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
